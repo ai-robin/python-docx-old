@@ -10,7 +10,7 @@ from __future__ import (
 
 from ..enum.style import WD_STYLE_TYPE
 from .parfmt import ParagraphFormat
-from .run import Run
+from .run import Run, Ins, Del
 from ..shared import Parented
 
 
@@ -38,6 +38,38 @@ class Paragraph(Parented):
         if style:
             run.style = style
         return run
+
+    def add_ins(self, text=None, style=None):
+        """
+        Append an ins to this paragraph containing a run and having character
+        style identified by style ID *style*. *text* can contain tab
+        (``\\t``) characters, which are converted to the appropriate XML form
+        for a tab. *text* can also include newline (``\\n``) or carriage
+        return (``\\r``) characters, each of which is converted to a line
+        break.
+        """
+
+        ins = self._p.add_ins()
+        revision = Ins(ins, self)
+        revision.add_run(text)
+
+        return revision
+
+    def add_del(self, text=None, style=None):
+        """
+        Append a del to this paragraph containing a run and having character
+        style identified by style ID *style*. *text* can contain tab
+        (``\\t``) characters, which are converted to the appropriate XML form
+        for a tab. *text* can also include newline (``\\n``) or carriage
+        return (``\\r``) characters, each of which is converted to a line
+        break.
+        """
+
+        del_elem = self._p.add_del()
+        revision = Del(del_elem, self)
+        revision.add_run(text)
+
+        return revision
 
     @property
     def alignment(self):
@@ -85,12 +117,22 @@ class Paragraph(Parented):
         return ParagraphFormat(self._element)
 
     @property
-    def runs(self):
+    def content(self):
         """
         Sequence of |Run| instances corresponding to the <w:r> elements in
         this paragraph.
         """
-        return [Run(r, self) for r in self._p.r_lst]
+
+        return [Run(r, self) for r in self._p.content_lst]
+
+
+    @property
+    def ins(self):
+        """
+        Sequence of |Ins| instances corresponding to the <w:ins> elements in
+        this paragraph.
+        """
+        return [Ins(r, self) for r in self._p.ins_lst]
 
     @property
     def style(self):
@@ -127,7 +169,7 @@ class Paragraph(Parented):
         run-level formatting, such as bold or italic, is removed.
         """
         text = ''
-        for run in self.runs:
+        for run in self.content:
             text += run.text
         return text
 

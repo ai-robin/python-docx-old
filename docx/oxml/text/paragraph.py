@@ -8,12 +8,30 @@ from ..ns import qn
 from ..xmlchemy import BaseOxmlElement, OxmlElement, ZeroOrMore, ZeroOrOne
 
 
+class CT_Ins(BaseOxmlElement):
+    """
+
+    """
+
+    r = ZeroOrMore('w:r')
+
+
+class CT_Del(BaseOxmlElement):
+    """
+
+    """
+
+    r = ZeroOrMore('w:r')
+
+
 class CT_P(BaseOxmlElement):
     """
     ``<w:p>`` element, containing the properties and text for a paragraph.
     """
     pPr = ZeroOrOne('w:pPr')
-    r = ZeroOrMore('w:r')
+    content = ZeroOrMore(['w:r', 'w:ins', 'w:del'])
+    #ins = ZeroOrMore('w:ins')
+    #deleted = ZeroOrMore('w:del')
 
     def _insert_pPr(self, pPr):
         self.insert(0, pPr)
@@ -26,6 +44,25 @@ class CT_P(BaseOxmlElement):
         new_p = OxmlElement('w:p')
         self.addprevious(new_p)
         return new_p
+
+    def add_ins(self):
+
+        new_ins = OxmlElement('w:ins')
+        #self.insert(0, new_ins)
+        self._insert_content(new_ins)
+        return new_ins
+
+    def add_del(self):
+
+        new_del = OxmlElement('w:del')
+        self._insert_content(new_del)
+        return new_del
+
+    def add_r(self):
+
+        new_r = OxmlElement('w:r')
+        self._insert_content(new_r)
+        return new_r
 
     @property
     def alignment(self):

@@ -279,6 +279,7 @@ class _BaseChildElement(object):
             'Add a new ``<%s>`` child element unconditionally, inserted in t'
             'he correct sequence.' % self._nsptagname
         )
+
         self._add_to_class(self._add_method_name, _add_child)
 
     def _add_creator(self):
@@ -390,7 +391,13 @@ class _BaseChildElement(object):
         property descriptor.
         """
         def get_child_element_list(obj):
-            return obj.findall(qn(self._nsptagname))
+            if isinstance(self._nsptagname, list):
+                child_elements = []
+                for tagname in self._nsptagname:
+                    child_elements += obj.findall(qn(tagname))
+                return child_elements
+            else:
+                return obj.findall(qn(self._nsptagname))
         get_child_element_list.__doc__ = (
             'A list containing each of the ``<%s>`` child elements, in the o'
             'rder they appear.' % self._nsptagname
@@ -551,6 +558,7 @@ class ZeroOrMore(_BaseChildElement):
         """
         Add the appropriate methods to *element_cls*.
         """
+
         super(ZeroOrMore, self).populate_class_members(
             element_cls, prop_name
         )
