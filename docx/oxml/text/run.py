@@ -35,7 +35,7 @@ class CT_R(BaseOxmlElement):
         Return a new ``<w:ins>`` element inserted directly after this one.
         """
         new_ins = OxmlElement('w:ins')
-        self.addafter(new_ins)
+        self.addnext(new_ins)
         return new_ins
 
     def add_del_after(self):
@@ -43,7 +43,7 @@ class CT_R(BaseOxmlElement):
         Return a new ``<w:del>`` element inserted directly after this one.
         """
         new_del = OxmlElement('w:del')
-        self.addafter(new_del)
+        self.addnext(new_del)
         return new_del
 
     def _insert_rPr(self, rPr):
