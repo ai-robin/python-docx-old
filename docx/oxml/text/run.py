@@ -7,7 +7,7 @@ Custom element classes related to text runs (CT_R).
 from ..ns import qn
 from ..simpletypes import ST_BrClear, ST_BrType
 from ..xmlchemy import (
-    BaseOxmlElement, OptionalAttribute, ZeroOrMore, ZeroOrOne
+    BaseOxmlElement, OptionalAttribute, ZeroOrMore, ZeroOrOne, OxmlElement
 )
 
 
@@ -29,6 +29,22 @@ class CT_R(BaseOxmlElement):
     cr = ZeroOrMore('w:cr')
     tab = ZeroOrMore('w:tab')
     drawing = ZeroOrMore('w:drawing')
+
+    def add_ins_after(self):
+        """
+        Return a new ``<w:ins>`` element inserted directly after this one.
+        """
+        new_ins = OxmlElement('w:ins')
+        self.addafter(new_ins)
+        return new_ins
+
+    def add_del_after(self):
+        """
+        Return a new ``<w:del>`` element inserted directly after this one.
+        """
+        new_del = OxmlElement('w:del')
+        self.addafter(new_del)
+        return new_del
 
     def _insert_rPr(self, rPr):
         self.insert(0, rPr)

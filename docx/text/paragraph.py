@@ -39,7 +39,7 @@ class Paragraph(Parented):
             run.style = style
         return run
 
-    def add_ins(self, text=None, style=None):
+    def add_ins(self, after_run=None, text=None, style=None):
         """
         Append an ins to this paragraph containing a run and having character
         style identified by style ID *style*. *text* can contain tab
@@ -49,13 +49,17 @@ class Paragraph(Parented):
         break.
         """
 
-        ins = self._p.add_ins()
-        revision = Ins(ins, self)
+        if after_run:
+            ins_elem = after_run.add_ins_after()
+        else:
+            ins_elem = self._p.add_ins()
+
+        revision = Ins(ins_elem, self)
         revision.add_run(text)
 
         return revision
 
-    def add_del(self, text=None, style=None):
+    def add_del(self, after_run=None, text=None, style=None):
         """
         Append a del to this paragraph containing a run and having character
         style identified by style ID *style*. *text* can contain tab
@@ -65,7 +69,11 @@ class Paragraph(Parented):
         break.
         """
 
-        del_elem = self._p.add_del()
+        if after_run:
+            del_elem = after_run.add_del_after()
+        else:
+            del_elem = self._p.add_del()
+
         revision = Del(del_elem, self)
         revision.add_run(text)
 
