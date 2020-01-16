@@ -105,6 +105,22 @@ class Run(Parented):
         super(Run, self).__init__(parent)
         self._r = self._element = self.element = r
 
+    def add_ins_after(self):
+        """
+        Return a newly created ins, inserted directly after this
+        run.
+        """
+        ins_elem = self._r.add_ins_after()
+        return Ins(ins_elem, self._parent)
+
+    def add_del_after(self):
+        """
+        Return a newly created del, inserted directly after this
+        run.
+        """
+        del_elem = self._r.add_del_after()
+        return Del(del_elem, self._parent)
+
     def add_break(self, break_type=WD_BREAK.LINE):
         """
         Add a break element of *break_type* to this run. *break_type* can
