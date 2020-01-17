@@ -120,6 +120,36 @@ class CT_R(BaseOxmlElement):
         _RunContentAppender.append_to_run_from_text(self, text)
 
 
+class CT_Ins(BaseOxmlElement):
+    """
+
+    """
+
+    r = ZeroOrMore('w:r')
+
+    def add_del_after(self):
+        """
+        Return a new ``<w:del>`` element inserted directly after this one.
+        """
+        new_del = OxmlElement('w:del')
+        self.addnext(new_del)
+        return new_del
+
+class CT_Del(BaseOxmlElement):
+    """
+
+    """
+
+    r = ZeroOrMore('w:r')
+
+    def add_del_after(self):
+        """
+        Return a new ``<w:del>`` element inserted directly after this one.
+        """
+        new_del = OxmlElement('w:del')
+        self.addnext(new_del)
+        return new_del
+
 class CT_Text(BaseOxmlElement):
     """
     ``<w:t>`` element, containing a sequence of characters within a run.

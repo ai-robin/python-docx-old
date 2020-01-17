@@ -219,10 +219,8 @@ register_element_cls('w:vanish',     CT_OnOff)
 register_element_cls('w:vertAlign',  CT_VerticalAlignRun)
 register_element_cls('w:webHidden',  CT_OnOff)
 
-from .text.paragraph import CT_P, CT_Ins, CT_Del  # noqa
+from .text.paragraph import CT_P  # noqa
 register_element_cls('w:p',          CT_P)
-register_element_cls('w:ins',        CT_Ins)
-register_element_cls('w:del',        CT_Del)
 
 from .text.parfmt import (  # noqa
     CT_Ind,
@@ -244,7 +242,9 @@ register_element_cls('w:tab',             CT_TabStop)
 register_element_cls('w:tabs',            CT_TabStops)
 register_element_cls('w:widowControl',    CT_OnOff)
 
-from .text.run import CT_Br, CT_R, CT_Text  # noqa
-register_element_cls('w:br', CT_Br)
-register_element_cls('w:r',  CT_R)
-register_element_cls('w:t',  CT_Text)
+from .text.run import CT_Br, CT_R, CT_Ins, CT_Del, CT_Text  # noqa
+register_element_cls('w:br',         CT_Br)
+register_element_cls('w:r',          CT_R)
+register_element_cls('w:t',          CT_Text)
+register_element_cls('w:ins',        CT_Ins)
+register_element_cls('w:del',        CT_Del)

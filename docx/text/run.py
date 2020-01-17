@@ -110,8 +110,9 @@ class Run(Parented):
         Return a newly created ins, inserted directly after this
         run.
         """
+
         ins_elem = self._r.add_ins_after()
-        return Ins(ins_elem, self._parent)
+        return ins_elem
 
     def add_del_after(self):
         """
@@ -119,7 +120,7 @@ class Run(Parented):
         run.
         """
         del_elem = self._r.add_del_after()
-        return Del(del_elem, self._parent)
+        return del_elem
 
     def add_break(self, break_type=WD_BREAK.LINE):
         """

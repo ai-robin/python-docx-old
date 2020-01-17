@@ -8,20 +8,6 @@ from ..ns import qn
 from ..xmlchemy import BaseOxmlElement, OxmlElement, ZeroOrMore, ZeroOrOne
 
 
-class CT_Ins(BaseOxmlElement):
-    """
-
-    """
-
-    r = ZeroOrMore('w:r')
-
-
-class CT_Del(BaseOxmlElement):
-    """
-
-    """
-
-    r = ZeroOrMore('w:r')
 
 
 class CT_P(BaseOxmlElement):
